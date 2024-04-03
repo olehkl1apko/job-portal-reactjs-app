@@ -27,12 +27,21 @@ function Login() {
     }
   };
 
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
   return (
     <div className="h-screen d-flex justify-content-center align-items-center bg-primary">
       <div className="bg-white p-4 w-400">
         <h4>JOB PORTAL LOGIN</h4>
         <div className="divider"></div>
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           <Form.Item name="email" label="Email">
             <input type="text" />
           </Form.Item>

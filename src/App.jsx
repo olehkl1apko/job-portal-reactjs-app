@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import { Loader } from "./components";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
 
   return (
     <div>
-      {loading && <div>Loading ...</div>}
+      {loading && <Loader />}
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
