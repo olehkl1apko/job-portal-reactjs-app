@@ -7,11 +7,12 @@ import {
   onSnapshot,
   query,
 } from "firebase/firestore";
+
 import { fireDB } from "../firebaseConfig";
 import {
   SetReadNotifications,
   SetUnreadNotifications,
-} from "../redux/notifications";
+} from "../redux/notificationsSlice";
 import store from "../redux/store";
 
 export const updateUserProfile = async (payload) => {
@@ -74,7 +75,7 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getUserNofications = async () => {
+export const getUserNotifications = async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   try {
     const q = query(collection(fireDB, "users", user.id, "notifications"));
