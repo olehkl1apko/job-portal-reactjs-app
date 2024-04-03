@@ -1,7 +1,17 @@
 import { Badge } from "antd";
+import { FolderOutlined, FileOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  AiOutlineMenu,
+  AiOutlineNotification,
+  AiOutlineUser,
+  AiOutlineLogout,
+  AiOutlineUsergroupAdd,
+  AiOutlineCheckCircle,
+} from "react-icons/ai";
+import { BiChevronLeft, BiHomeAlt } from "react-icons/bi";
 
 import { getUserNotifications, getUserProfile } from "../apis/users";
 import { HideLoading, ShowLoading } from "../redux/alertSlice";
@@ -22,25 +32,25 @@ function DefaultLayout({ children }) {
     {
       title: "Home",
       onClick: () => navigate("/"),
-      icon: `<i class="ri-home-7-line"></i>`,
+      icon: <BiHomeAlt />,
       path: "/",
     },
     {
       title: "Applied Jobs",
       onClick: () => navigate("/applied-jobs"),
-      icon: <i class="ri-file-list-3-line"></i>,
+      icon: <AiOutlineCheckCircle />,
       path: "/applied-jobs",
     },
     {
       title: "Posted Jobs",
       onClick: () => navigate("/posted-jobs"),
-      icon: <i class="ri-file-list-2-line"></i>,
+      icon: <FileOutlined />,
       path: "/posted-jobs",
     },
     {
       title: "Profile",
       onClick: () => navigate(`/profile/${user.id}`),
-      icon: <i class="ri-user-2-line"></i>,
+      icon: <AiOutlineUser />,
       path: "/profile",
     },
     {
@@ -49,7 +59,7 @@ function DefaultLayout({ children }) {
         localStorage.removeItem("user");
         navigate("/login");
       },
-      icon: <i class="ri-logout-box-r-line"></i>,
+      icon: <AiOutlineLogout />,
       path: "/login",
     },
   ];
@@ -58,20 +68,19 @@ function DefaultLayout({ children }) {
     {
       title: "Home",
       onClick: () => navigate("/"),
-      icon: <i class="ri-home-7-line"></i>,
+      icon: <BiHomeAlt />,
       path: "/",
     },
-
     {
       title: "Jobs",
       onClick: () => navigate("/admin/jobs"),
-      icon: <i class="ri-file-list-2-line"></i>,
+      icon: <FolderOutlined />,
       path: "/admin/jobs",
     },
     {
       title: "Users",
       onClick: () => navigate("/admin/users"),
-      icon: <i class="ri-user-2-line"></i>,
+      icon: <AiOutlineUsergroupAdd />,
       path: "/admin/users",
     },
     {
@@ -80,7 +89,7 @@ function DefaultLayout({ children }) {
         localStorage.removeItem("user");
         navigate("/login");
       },
-      icon: <i class="ri-logout-box-r-line"></i>,
+      icon: <AiOutlineLogout />,
       path: "/login",
     },
   ];
@@ -125,11 +134,18 @@ function DefaultLayout({ children }) {
 
   return (
     <div className="layout">
-      <div className="sidebar justify-content-between flex">
+      <div className="sidebar d-flex flex-column justify-content-between">
+        <div className="menu-item">
+          {collapsed ? (
+            <AiOutlineMenu size={28} onClick={() => setCollapsed(!collapsed)} />
+          ) : (
+            <BiChevronLeft size={28} onClick={() => setCollapsed(!collapsed)} />
+          )}
+        </div>
         <div
           className="menu"
           style={{
-            width: collapsed ? "40px" : "150px",
+            width: collapsed ? "40px" : "180px",
           }}
         >
           {menuToRender.map((item, index) => {
@@ -146,35 +162,24 @@ function DefaultLayout({ children }) {
             );
           })}
         </div>
+        <span style={{ fontSize: "12px" }}>
+          {!collapsed && "2024 All right reserved"}
+        </span>
       </div>
       <div className="content">
         <div className="header justify-content-between d-flex">
-          <div className="d-flex items-center gap-2">
-            {collapsed && (
-              <i
-                class="ri-menu-2-fill"
-                onClick={() => setCollapsed(!collapsed)}
-              ></i>
-            )}
-            {!collapsed && (
-              <i
-                class="ri-close-line"
-                onClick={() => setCollapsed(!collapsed)}
-              ></i>
-            )}
-            <span className="logo">SHEYJOBS-LITE</span>
-          </div>
+          <span className="logo">JOB-PORTAL</span>
           <div className="d-flex gap-1 align-items-center">
             <Badge
               count={unreadNotifications?.length || 0}
               className="mx-5"
               onClick={() => navigate("/notifications")}
             >
-              <i class="ri-notification-line"></i>
+              <AiOutlineNotification />
             </Badge>
 
             <span>{user?.name}</span>
-            <i class="ri-shield-user-line"></i>
+            <AiOutlineUser />
           </div>
         </div>
         <div className="body">{children}</div>
