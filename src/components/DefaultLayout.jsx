@@ -163,7 +163,7 @@ function DefaultLayout({ children }) {
           })}
         </div>
         <span style={{ fontSize: "12px" }}>
-          {!collapsed && "2024 All right reserved"}
+          {!collapsed && "2024 All rights reserved"}
         </span>
       </div>
       <div className="content">
