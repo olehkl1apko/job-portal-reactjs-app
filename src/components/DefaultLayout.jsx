@@ -1,5 +1,4 @@
 import { Badge } from "antd";
-import { FolderOutlined, FileOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,130 +6,59 @@ import {
   AiOutlineMenu,
   AiOutlineNotification,
   AiOutlineUser,
-  AiOutlineLogout,
-  AiOutlineUsergroupAdd,
-  AiOutlineCheckCircle,
 } from "react-icons/ai";
-import { BiChevronLeft, BiHomeAlt } from "react-icons/bi";
+import { BiChevronLeft } from "react-icons/bi";
 
 import { getUserNotifications, getUserProfile } from "../apis/users";
 import { HideLoading, ShowLoading } from "../redux/alertSlice";
 import { SetReloadNotifications } from "../redux/notificationsSlice";
+import Menu from "./Menu";
 
 function DefaultLayout({ children }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
-  const [menuToRender, setMenuToRender] = useState([]);
+  const [userType, setUserType] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
   const { reloadNotifications, unreadNotifications } = useSelector(
     (state) => state.notifications
   );
 
-  const userMenu = [
-    {
-      title: "Home",
-      onClick: () => navigate("/"),
-      icon: <BiHomeAlt />,
-      path: "/",
-    },
-    {
-      title: "Applied Jobs",
-      onClick: () => navigate("/applied-jobs"),
-      icon: <AiOutlineCheckCircle />,
-      path: "/applied-jobs",
-    },
-    {
-      title: "Posted Jobs",
-      onClick: () => navigate("/posted-jobs"),
-      icon: <FileOutlined />,
-      path: "/posted-jobs",
-    },
-    {
-      title: "Profile",
-      onClick: () => navigate(`/profile/${user.id}`),
-      icon: <AiOutlineUser />,
-      path: "/profile",
-    },
-    {
-      title: "Logout",
-      onClick: () => {
-        localStorage.removeItem("user");
-        navigate("/login");
-      },
-      icon: <AiOutlineLogout />,
-      path: "/login",
-    },
-  ];
-
-  const adminMenu = [
-    {
-      title: "Home",
-      onClick: () => navigate("/"),
-      icon: <BiHomeAlt />,
-      path: "/",
-    },
-    {
-      title: "Jobs",
-      onClick: () => navigate("/admin/jobs"),
-      icon: <FolderOutlined />,
-      path: "/admin/jobs",
-    },
-    {
-      title: "Users",
-      onClick: () => navigate("/admin/users"),
-      icon: <AiOutlineUsergroupAdd />,
-      path: "/admin/users",
-    },
-    {
-      title: "Logout",
-      onClick: () => {
-        localStorage.removeItem("user");
-        navigate("/login");
-      },
-      icon: <AiOutlineLogout />,
-      path: "/login",
-    },
-  ];
-
-  const getData = async () => {
-    try {
-      dispatch(ShowLoading());
-      const userId = JSON.parse(localStorage.getItem("user")).id;
-      const response = await getUserProfile(userId);
-
-      dispatch(HideLoading());
-      if (response.data?.isAdmin) {
-        setMenuToRender(adminMenu);
-      } else {
-        setMenuToRender(userMenu);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const loadNotifications = async () => {
-    try {
-      dispatch(ShowLoading());
-      await getUserNotifications();
-      dispatch(HideLoading());
-      dispatch(SetReloadNotifications(false));
-    } catch (error) {
-      dispatch(HideLoading());
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        dispatch(ShowLoading());
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        const response = await getUserProfile(userId);
+
+        dispatch(HideLoading());
+        response.data?.isAdmin ? setUserType("admin") : setUserType("user");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getData();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (reloadNotifications) {
+      const loadNotifications = async () => {
+        try {
+          dispatch(ShowLoading());
+          await getUserNotifications();
+          dispatch(HideLoading());
+
+          dispatch(SetReloadNotifications(false));
+        } catch (error) {
+          dispatch(HideLoading());
+        }
+      };
+
       loadNotifications();
     }
-  }, [reloadNotifications]);
+  }, [dispatch, reloadNotifications]);
 
   return (
     <div className="layout">
@@ -142,26 +70,7 @@ function DefaultLayout({ children }) {
             <BiChevronLeft size={28} onClick={() => setCollapsed(!collapsed)} />
           )}
         </div>
-        <div
-          className="menu"
-          style={{
-            width: collapsed ? "40px" : "180px",
-          }}
-        >
-          {menuToRender.map((item, index) => {
-            const isActive = window.location.pathname === item.path;
-            return (
-              <div
-                className={`menu-item ${isActive && "active-menu-item"}`}
-                onClick={item.onClick}
-                key={index}
-              >
-                {item.icon}
-                {!collapsed && <span>{item.title}</span>}
-              </div>
-            );
-          })}
-        </div>
+        <Menu userType={userType} user={user} collapsed={collapsed} />
         <span style={{ fontSize: "12px" }}>
           {!collapsed && "2024 All rights reserved"}
         </span>
