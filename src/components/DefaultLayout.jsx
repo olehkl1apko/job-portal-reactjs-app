@@ -9,10 +9,10 @@ import {
 } from "react-icons/ai";
 import { BiChevronLeft } from "react-icons/bi";
 
+import Menu from "./Menu";
 import { getUserNotifications, getUserProfile } from "../apis/users";
 import { HideLoading, ShowLoading } from "../redux/alertSlice";
 import { SetReloadNotifications } from "../redux/notificationsSlice";
-import Menu from "./Menu";
 
 function DefaultLayout({ children }) {
   const navigate = useNavigate();

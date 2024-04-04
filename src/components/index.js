@@ -4,3 +4,4 @@ export { default as PublicRoute } from "./PublicRoute";
 export { default as PageTitle } from "./PageTitle";
 export { default as Filters } from "./Filters";
 export { default as JobDetails } from "./JobDetails";
+export { default as NotificationTabs } from "./NotificationTabs";
