@@ -36,7 +36,11 @@ function AppliedJobs() {
         const user = JSON.parse(localStorage.getItem("user"));
         const response = await getApplicationsByUserId(user.id);
         if (response.success) {
-          setData(response.data);
+          const newData = response.data.map((item) => ({
+            ...item,
+            key: item.id,
+          }));
+          setData(newData);
         }
         dispatch(HideLoading());
       } catch (error) {

@@ -73,6 +73,7 @@ export const RegisterUser = async (payload) => {
       "job-portal"
     ).toString();
     payload.password = encryptedPassword;
+    payload.status = "pending";
 
     // add user to db
     const response = await addDoc(collection(fireDB, "users"), payload);

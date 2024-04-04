@@ -31,6 +31,21 @@ export const updateUserProfile = async (payload) => {
   }
 };
 
+export const updateUserStatus = async (payload) => {
+  try {
+    await updateDoc(doc(fireDB, "users", payload.id), payload);
+    return {
+      success: true,
+      message: "Status updated successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
 export const getUserProfile = async (id) => {
   try {
     const docRef = doc(fireDB, "users", id);
