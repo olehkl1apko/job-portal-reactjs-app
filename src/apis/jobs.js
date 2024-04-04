@@ -36,7 +36,6 @@ export const addNewJobPost = async (payload) => {
       message: "Job posted successfully",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
@@ -116,7 +115,6 @@ export const getAllJobs = async (filters) => {
       data: sortedPosts,
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
@@ -125,7 +123,6 @@ export const getAllJobs = async (filters) => {
 };
 
 export const editJobDetails = async (payload) => {
-  console.log(payload);
   try {
     await updateDoc(doc(fireDB, "jobs", payload.id), {
       ...payload,
@@ -145,7 +142,6 @@ export const editJobDetails = async (payload) => {
 
 export const changeJobStatusFromAdmin = async (payload) => {
   try {
-    console.log(payload);
     await updateDoc(doc(fireDB, "jobs", payload.id), {
       ...payload,
       updatedOn: moment().format("DD-MM-YYYY HH:mm A"),
@@ -166,7 +162,6 @@ export const changeJobStatusFromAdmin = async (payload) => {
       message: "Job updated successfully",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
@@ -220,7 +215,6 @@ export const applyJobPost = async (payload) => {
       message: "Job applied successfully",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
@@ -312,7 +306,6 @@ export const changeApplicationStatus = async (payload) => {
       message: "Application status updated successfully",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",

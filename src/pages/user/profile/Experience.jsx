@@ -1,10 +1,10 @@
 import { Form, Row, Col } from "antd";
 import { BiTrash } from "react-icons/bi";
 
-function Education() {
+function Experience() {
   return (
     <>
-      <Form.List name="education">
+      <Form.List name="experiences">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -12,19 +12,19 @@ function Education() {
                 <Col span={8}>
                   <Form.Item
                     {...restField}
-                    name={[name, "degree"]}
+                    name={[name, "company"]}
                     rules={[{ required: true, message: "required" }]}
-                    label="Degree"
+                    label="Company"
                   >
                     <input type="text" />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                   <Form.Item
                     {...restField}
-                    name={[name, "institution"]}
+                    name={[name, "designation"]}
                     rules={[{ required: true, message: "required" }]}
-                    label="Institution"
+                    label="Designation"
                   >
                     <input type="text" />
                   </Form.Item>
@@ -32,9 +32,19 @@ function Education() {
                 <Col span={4}>
                   <Form.Item
                     {...restField}
-                    name={[name, "percentage"]}
+                    name={[name, "duration"]}
                     rules={[{ required: true, message: "required" }]}
-                    label="Percentage"
+                    label="Duration"
+                  >
+                    <input type="text" />
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "location"]}
+                    rules={[{ required: true, message: "required" }]}
+                    label="Location"
                   >
                     <input type="text" />
                   </Form.Item>
@@ -46,14 +56,14 @@ function Education() {
             ))}
             <Form.Item>
               <button className="primary-outlined-btn" onClick={() => add()}>
-                ADD EDUCATION
+                ADD EXPERIENCE
               </button>
             </Form.Item>
           </>
         )}
       </Form.List>
 
-      <Form.List name="skills">
+      <Form.List name="projects">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -61,19 +71,29 @@ function Education() {
                 <Col span={8}>
                   <Form.Item
                     {...restField}
-                    name={[name, "technology"]}
+                    name={[name, "title"]}
                     rules={[{ required: true, message: "required" }]}
-                    label="Technology"
+                    label="Title"
                   >
                     <input type="text" />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10} className="mt-4">
                   <Form.Item
                     {...restField}
-                    name={[name, "rating"]}
+                    name={[name, "description"]}
                     rules={[{ required: true, message: "required" }]}
-                    label="Rating"
+                    label="Description"
+                  >
+                    <textarea type="text" />
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "duration"]}
+                    rules={[{ required: true, message: "required" }]}
+                    label="Duration"
                   >
                     <input type="text" />
                   </Form.Item>
@@ -85,7 +105,7 @@ function Education() {
             ))}
             <Form.Item>
               <button className="primary-outlined-btn" onClick={() => add()}>
-                ADD SKILLS
+                ADD PROJECT
               </button>
             </Form.Item>
           </>
@@ -95,4 +115,4 @@ function Education() {
   );
 }
 
-export default Education;
+export default Experience;

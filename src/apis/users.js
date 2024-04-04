@@ -16,7 +16,6 @@ import {
 import store from "../redux/store";
 
 export const updateUserProfile = async (payload) => {
-  console.log(payload);
   const user = JSON.parse(localStorage.getItem("user"));
   try {
     await updateDoc(doc(fireDB, "users", user.id), payload);
@@ -25,7 +24,6 @@ export const updateUserProfile = async (payload) => {
       message: "Profile updated successfully",
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: "Something went wrong",

@@ -78,17 +78,15 @@ function DefaultLayout({ children }) {
       <div className="content">
         <div className="header justify-content-between d-flex">
           <span className="logo">JOB-PORTAL</span>
-          <div className="d-flex gap-1 align-items-center">
+          <div className="d-flex align-items-center px-3">
+            <AiOutlineUser />
+            <span className="ms-2">{user?.name}</span>
             <Badge
               count={unreadNotifications?.length || 0}
-              className="mx-5"
               onClick={() => navigate("/notifications")}
             >
               <AiOutlineNotification />
             </Badge>
-
-            <span>{user?.name}</span>
-            <AiOutlineUser />
           </div>
         </div>
         <div className="body">{children}</div>
